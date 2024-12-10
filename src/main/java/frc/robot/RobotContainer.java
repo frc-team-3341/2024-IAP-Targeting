@@ -225,9 +225,20 @@ public class RobotContainer {
     // transAlignment = new TransationalAlignment(swerve, vision);
   }
 
-  public Command getAutonomousCommand() {
-    return rotAlignment;
+  // public Command getAutonomousCommand() {
+  //   return rotAlignment;
     
+  // }
+
+  public Command getAutonomousCommand() {
+    return new SequentialCommandGroup(
+      autoPaths.getAutonomousCommand(),
+
+      new ParallelCommandGroup(
+        rotAlignment, 
+        transAlignment
+      )
+    );
   }
 
 

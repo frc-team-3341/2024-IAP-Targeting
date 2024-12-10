@@ -39,7 +39,7 @@ public class TransationalAlignment extends Command {
 
             else isAligned = true;
           
-            swerve.drive(new Translation2d(0.5*direction, 0), 0, false, false);
+            swerve.drive(new Translation2d(0, 0.5*direction), 0, false, false);
     }
         
     }

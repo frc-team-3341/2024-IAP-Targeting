@@ -13,7 +13,8 @@ public class RotationalAlignment extends Command {
     boolean isAligned;
     int direction;
 
-    double[] toleranceArray = {-0.5, 0.5}; //index 0 is bottom range, index 1 is highest possible value to be considered aligned
+    double[] toleranceArray = {178, 180}; //index 0 is bottom range, index 1 is highest possible value to be considered aligned
+    double[] negativeToleranceArray = {-178, -180};
 
     PIDController pid = new PIDController(0, 0 , 0); //TODO figure out PID constants por favor
 
@@ -22,7 +23,7 @@ public class RotationalAlignment extends Command {
         this.vision = vision;
         this.swerve = swerve;
         addRequirements(this.vision, this.swerve);
-        pid.setTolerance(0.5);
+        // pid.setTolerance(0.5);
     }
     
     @Override
@@ -46,10 +47,10 @@ public class RotationalAlignment extends Command {
     @Override
     public void execute() {
         if (vision.targetDetected()) {
-            if (vision.getYaw() < toleranceArray[0]) {
+            if (vision.getZAngle() < 0 && vision.getZAngle() > negativeToleranceArray[0]) { //counterclockwise turn
                 direction = 1;
             }
-            else if (vision.getYaw() > toleranceArray[1]) {
+            else if (vision.getZAngle() > 0 && vision.getZAngle() < toleranceArray[0]) { //clockwise turn 
                 direction = -1;
             }
             else isAligned = true;
@@ -67,7 +68,9 @@ public class RotationalAlignment extends Command {
 
     @Override
     public boolean isFinished() {
-        if (vision.getYaw() >= toleranceArray[0] && vision.getYaw() <= toleranceArray[1] || isAligned) {
+        if (vision.getZAngle() >= toleranceArray[0] && vision.getZAngle() <= toleranceArray[1] || 
+        vision.getZAngle() <= negativeToleranceArray[0] && vision.getZAngle() >= negativeToleranceArray[1] || isAligned) {
+            
             swerve.drive(new Translation2d(0, 0), 0, false, false);
 
             swerve.stopMotors();

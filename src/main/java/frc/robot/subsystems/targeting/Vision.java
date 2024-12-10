@@ -7,6 +7,7 @@ import org.photonvision.proto.Photon;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -71,6 +72,14 @@ public class Vision extends SubsystemBase{
         else return 0;
     }
 
+    public double getZAngle() {
+        if (targetDetected()) {
+            Rotation3d rot = targetData.getRotation();
+            return Math.toDegrees(rot.getAngle());
+        }
+        else return 0.0;
+    }
+
 
 
     @Override
@@ -81,6 +90,7 @@ public class Vision extends SubsystemBase{
         //output values to SmartDashboard/Shuffleboard
         SmartDashboard.putBoolean("Target Detected", targetDetected());
         SmartDashboard.putNumber("Yaw Angle", getYaw());
+        SmartDashboard.putNumber("Z Angle", getZAngle());
 
         SmartDashboard.putNumber("Horizontal Displacement", getHorizontalDisplacement());
     }
