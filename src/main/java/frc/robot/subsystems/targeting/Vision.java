@@ -35,6 +35,7 @@ public class Vision extends SubsystemBase{
     }
 
     public double getYaw() {
+        if (targetDetected()) {
         PhotonPipelineResult result = camera.getLatestResult();
 
         PhotonTrackedTarget target = result.getBestTarget();
@@ -44,7 +45,9 @@ public class Vision extends SubsystemBase{
             
             return yaw;
         }
+        }
         return 0.0;
+        
     }
 
 

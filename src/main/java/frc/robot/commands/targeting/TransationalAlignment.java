@@ -31,15 +31,15 @@ public class TransationalAlignment extends Command {
     public void execute() {
         if (vision.targetDetected()) {
             if (vision.getHorizontalDisplacement() < toleranceArray[0]) {
-                direction = 1;
+                direction = -1;
             }
             else if (vision.getHorizontalDisplacement() > toleranceArray[1]) {
-                direction = -1;
+                direction = 1;
             }
 
             else isAligned = true;
           
-            swerve.drive(new Translation2d(0, 0.5*direction), 0, false, false);
+            swerve.drive(new Translation2d(0, 0.3*direction), 0, false, false);
     }
         
     }

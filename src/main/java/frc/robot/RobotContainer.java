@@ -217,12 +217,6 @@ public class RobotContainer {
 
   private void configureBindings() {
 
-
-
-
-    // rotAlignment = new RotationalAlignment(swerve, vision);
-
-    // transAlignment = new TransationalAlignment(swerve, vision);
   }
 
   // public Command getAutonomousCommand() {
@@ -231,14 +225,7 @@ public class RobotContainer {
   // }
 
   public Command getAutonomousCommand() {
-    return new SequentialCommandGroup(
-      autoPaths.getAutonomousCommand(),
-
-      new ParallelCommandGroup(
-        rotAlignment, 
-        transAlignment
-      )
-    );
+    return transAlignment;
   }
 
 

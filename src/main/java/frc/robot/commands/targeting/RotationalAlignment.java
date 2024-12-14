@@ -11,7 +11,7 @@ public class RotationalAlignment extends Command {
     Vision vision;
     SwerveDrive swerve;
     boolean isAligned;
-    int direction;
+    double direction;
 
     double[] toleranceArray = {178, 180}; //index 0 is bottom range, index 1 is highest possible value to be considered aligned
     double[] negativeToleranceArray = {-178, -180};
@@ -48,14 +48,14 @@ public class RotationalAlignment extends Command {
     public void execute() {
         if (vision.targetDetected()) {
             if (vision.getZAngle() < 0 && vision.getZAngle() > negativeToleranceArray[0]) { //counterclockwise turn
-                direction = 1;
+                direction = -1;
             }
             else if (vision.getZAngle() > 0 && vision.getZAngle() < toleranceArray[0]) { //clockwise turn 
-                direction = -1;
+                direction = 1;
             }
             else isAligned = true;
 
-            swerve.drive(new Translation2d(0, 0), direction, false, false);
+            swerve.drive(new Translation2d(0, 0), 0.01*direction, false, false);
         }
     }
 
@@ -70,7 +70,7 @@ public class RotationalAlignment extends Command {
     public boolean isFinished() {
         if (vision.getZAngle() >= toleranceArray[0] && vision.getZAngle() <= toleranceArray[1] || 
         vision.getZAngle() <= negativeToleranceArray[0] && vision.getZAngle() >= negativeToleranceArray[1] || isAligned) {
-            
+
             swerve.drive(new Translation2d(0, 0), 0, false, false);
 
             swerve.stopMotors();
