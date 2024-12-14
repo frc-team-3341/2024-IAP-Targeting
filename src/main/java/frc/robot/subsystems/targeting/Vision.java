@@ -36,21 +36,19 @@ public class Vision extends SubsystemBase{
 
     public double getYaw() {
         if (targetDetected()) {
-        PhotonPipelineResult result = camera.getLatestResult();
+            PhotonPipelineResult result = camera.getLatestResult();
 
-        PhotonTrackedTarget target = result.getBestTarget();
+            PhotonTrackedTarget target = result.getBestTarget();
         
-        if (target != null) {
-            double yaw = target.getYaw();
+            if (target != null) {
+                double yaw = target.getYaw();
             
-            return yaw;
-        }
+                return yaw;
+            }
         }
         return 0.0;
         
     }
-
-
     
     //gets target data such as x and y offset, rotational offset, and returns everything as a Transform3d 
     public Transform3d getTargetData() {
@@ -64,9 +62,6 @@ public class Vision extends SubsystemBase{
         return null;
         }
 
-
-    
-    
     //returns the current horizontal displacement with respect to the AprilTag (uses getY() because the Y offset in PhotonVision is the horizontal axis)
     public double getHorizontalDisplacement() {
         if (targetDetected()) {
@@ -74,7 +69,14 @@ public class Vision extends SubsystemBase{
         }
         else return 0;
     }
-
+    
+    public double getLongitudinalDisplacement() {
+        if (targetDetected()) {
+            return targetData.getX();
+        }
+        else return 0;
+    }
+    
     public double getZAngle() {
         if (targetDetected()) {
             Rotation3d rot = targetData.getRotation();
@@ -82,8 +84,6 @@ public class Vision extends SubsystemBase{
         }
         else return 0.0;
     }
-
-
 
     @Override
     public void periodic() {
@@ -96,6 +96,7 @@ public class Vision extends SubsystemBase{
         SmartDashboard.putNumber("Z Angle", getZAngle());
 
         SmartDashboard.putNumber("Horizontal Displacement", getHorizontalDisplacement());
+        SmartDashboard.putNumber("Longitudinal Displacement", getHorizontalDisplacement());
     }
 
 }

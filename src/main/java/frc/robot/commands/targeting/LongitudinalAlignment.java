@@ -21,8 +21,6 @@ public class LongitudinalAlignment extends Command {
     @Override
     public void initialize() {
         swerve.drive(new Translation2d(0, 0), 0, false, false);
-        
-        
     }
 
     @Override
@@ -50,7 +48,7 @@ public class LongitudinalAlignment extends Command {
             swerve.drive(new Translation2d(0, 0), 0, false, false);
 
             swerve.stopMotors();
-            
+
             return true;
         }
         return false;
