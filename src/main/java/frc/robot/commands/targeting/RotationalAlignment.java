@@ -47,10 +47,10 @@ public class RotationalAlignment extends Command {
     @Override
     public void execute() {
         if (vision.targetDetected()) {
-            if (vision.getZAngle() > 180 && vision.getZAngle() > toleranceArray[1]) { //counterclockwise turn
+            if (vision.getZAngle() > toleranceArray[1]) { //counterclockwise turn
                 direction = -1;
             }
-            else if (vision.getZAngle() < 180 && vision.getZAngle() < toleranceArray[0]) { //clockwise turn 
+            else if (vision.getZAngle() < toleranceArray[0]) { //clockwise turn 
                 direction = 1;
             }
             else isAligned = true;
