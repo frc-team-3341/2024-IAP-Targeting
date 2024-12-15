@@ -49,7 +49,7 @@ public class Vision extends SubsystemBase{
         return 0.0;
         
     }
-    
+
     //gets target data such as x and y offset, rotational offset, and returns everything as a Transform3d 
     public Transform3d getTargetData() {
         PhotonPipelineResult result = camera.getLatestResult();
@@ -91,12 +91,12 @@ public class Vision extends SubsystemBase{
         targetData = getTargetData();
 
         //output values to SmartDashboard/Shuffleboard
-        SmartDashboard.putBoolean("Target Detected", targetDetected());
-        SmartDashboard.putNumber("Yaw Angle", getYaw());
-        SmartDashboard.putNumber("Z Angle", getZAngle());
+        // SmartDashboard.putBoolean("Target Detected", targetDetected());
+        // SmartDashboard.putNumber("Yaw Angle", getYaw());
+        // SmartDashboard.putNumber("Z Angle", getZAngle());
 
-        SmartDashboard.putNumber("Horizontal Displacement", getHorizontalDisplacement());
-        SmartDashboard.putNumber("Longitudinal Displacement", getHorizontalDisplacement());
+        // SmartDashboard.putNumber("Horizontal Displacement", getHorizontalDisplacement());
+        // SmartDashboard.putNumber("Longitudinal Displacement", getHorizontalDisplacement());
     }
 
 }

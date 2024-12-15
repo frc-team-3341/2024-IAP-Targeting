@@ -10,7 +10,8 @@ import frc.robot.commands.swerve.CrabDrive;
 import frc.robot.commands.swerve.SwerveTeleop;
 import frc.robot.commands.swerve.TestFourModules;
 import frc.robot.commands.targeting.RotationalAlignment;
-import frc.robot.commands.targeting.TransationalAlignment;
+import frc.robot.commands.targeting.HorizontalAlignment;
+import frc.robot.commands.targeting.LongitudinalAlignment;
 import frc.robot.subsystems.swerve.SwerveDrive;
 import frc.robot.subsystems.swerve.SwerveModuleIO;
 import frc.robot.subsystems.swerve.SwerveModuleIOSim;
@@ -92,9 +93,11 @@ public class RobotContainer {
 
   private RotationalAlignment rotAlignment;
 
-  private TransationalAlignment transAlignment;
+  private HorizontalAlignment transAlignment;
 
-  private String cameraName = "bestcamera";
+  private LongitudinalAlignment longAlignment;
+
+  private String cameraName = "camera";
 
 
 
@@ -109,7 +112,8 @@ public class RobotContainer {
     camera = new PhotonCamera(cameraName);
     vision = new Vision(camera);
     rotAlignment = new RotationalAlignment(swerve, vision);
-    transAlignment = new TransationalAlignment(swerve, vision);
+    transAlignment = new HorizontalAlignment(swerve, vision);
+    longAlignment = new LongitudinalAlignment(swerve, vision);
 
     
     // Construct all other things
@@ -219,17 +223,20 @@ public class RobotContainer {
 
   }
 
-  // public Command getAutonomousCommand() {
-  //   return rotAlignment;
-    
-  // }
-
   public Command getAutonomousCommand() {
-    return transAlignment;
+    return new SequentialCommandGroup(
+      new RotationalAlignment(swerve, vision),
+      new HorizontalAlignment(swerve, vision)
+    );
   }
 
-
-
+  // public Command getAutonomousCommand() {
+  //   return new SequentialCommandGroup(
+  //     new HorizontalAlignment(swerve, vision),
+  //     new RotationalAlignment(swerve, vision),
+  //     new LongitudinalAlignment(swerve, vision)
+  //   );
+  // }
 
   public void initCommandInTeleop() {
     swerve.setDefaultCommand(teleopCommandChooser.getSelected());
