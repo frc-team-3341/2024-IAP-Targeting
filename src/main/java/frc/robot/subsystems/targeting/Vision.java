@@ -85,6 +85,52 @@ public class Vision extends SubsystemBase{
         else return 0.0;
     }
 
+    public double getRotationalDirection() {
+        double direction;
+        if (targetDetected()) {
+            if (getZAngle() > 182) { //counterclockwise turn
+                direction = -1;
+            }
+            else if (getZAngle() < 178) { //clockwise turn 
+                direction = 1;
+            }
+            else direction = 0;
+
+            return direction;
+        }
+        return 0.0;
+    }
+
+    public double getHorizontalDirection() {
+        double direction;
+        if (targetDetected()) {
+            if (getHorizontalDisplacement() < -0.5) {
+                direction = -1;
+            }
+            else if (getHorizontalDisplacement() > 0.5) {
+                direction = 1;
+            }
+            else direction = 0;
+
+            return direction;
+        }
+        return 0.0;
+    }
+
+    public boolean rotationalAtSetpoint() {
+        if (getZAngle() < 178 || getZAngle() > 182) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean horizontalAtSetpoint() {
+        if (getHorizontalDisplacement() < -0.5 || getHorizontalDisplacement() > 0.5) {
+            return false;
+        }
+        return true;
+    }
+
     @Override
     public void periodic() {
         //update targetData with current info
