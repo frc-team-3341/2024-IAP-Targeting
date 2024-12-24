@@ -44,6 +44,11 @@ public class Alignment extends Command{
     @Override
     public boolean isFinished() {
         if (vision.horizontalAtSetpoint() && vision.rotationalAtSetpoint()) {
+
+            swerve.drive(new Translation2d(0, 0), 0, false, false);
+
+            swerve.stopMotors(); 
+            
             return true;
         }
         return false;
