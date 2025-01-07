@@ -104,10 +104,10 @@ public class Vision extends SubsystemBase{
     public double getHorizontalDirection() {
         double direction;
         if (targetDetected()) {
-            if (getHorizontalDisplacement() < -0.5) {
+            if (getHorizontalDisplacement() < -0.05) {
                 direction = -1;
             }
-            else if (getHorizontalDisplacement() > 0.5) {
+            else if (getHorizontalDisplacement() > 0.05) {
                 direction = 1;
             }
             else direction = 0;
@@ -117,6 +117,8 @@ public class Vision extends SubsystemBase{
         return 0.0;
     }
 
+   
+
     public boolean rotationalAtSetpoint() {
         if (getZAngle() < 178 || getZAngle() > 182) {
             return false;
@@ -124,8 +126,9 @@ public class Vision extends SubsystemBase{
         return true;
     }
 
+
     public boolean horizontalAtSetpoint() {
-        if (getHorizontalDisplacement() < -0.5 || getHorizontalDisplacement() > 0.5) {
+        if (getHorizontalDisplacement() < -0.05 || getHorizontalDisplacement() > 0.05) {
             return false;
         }
         return true;

@@ -9,9 +9,10 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.swerve.CrabDrive;
 import frc.robot.commands.swerve.SwerveTeleop;
 import frc.robot.commands.swerve.TestFourModules;
-import frc.robot.commands.targeting.RotationalAlignment;
+import frc.robot.commands.targeting.Alignment;
 import frc.robot.commands.targeting.HorizontalAlignment;
 import frc.robot.commands.targeting.LongitudinalAlignment;
+import frc.robot.commands.targeting.RotationalAlignment;
 import frc.robot.subsystems.swerve.SwerveDrive;
 import frc.robot.subsystems.swerve.SwerveModuleIO;
 import frc.robot.subsystems.swerve.SwerveModuleIOSim;
@@ -97,7 +98,11 @@ public class RobotContainer {
 
   private LongitudinalAlignment longAlignment;
 
+  private Alignment alignment;
+
   private String cameraName = "camera";
+
+
 
 
 
@@ -114,6 +119,7 @@ public class RobotContainer {
     rotAlignment = new RotationalAlignment(swerve, vision);
     transAlignment = new HorizontalAlignment(swerve, vision);
     longAlignment = new LongitudinalAlignment(swerve, vision);
+    alignment = new Alignment(swerve, vision);
 
     
     // Construct all other things
@@ -224,10 +230,11 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return new SequentialCommandGroup(
-      new RotationalAlignment(swerve, vision),
-      new HorizontalAlignment(swerve, vision)
-    );
+    return alignment;
+    // return new SequentialCommandGroup(
+    //   new RotationalAlignment(swerve, vision),
+    //   new HorizontalAlignment(swerve, vision)
+    // );
   }
 
   // public Command getAutonomousCommand() {

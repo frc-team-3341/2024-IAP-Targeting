@@ -26,7 +26,7 @@ public class SwerveTeleop extends Command {
    private BooleanSupplier robotCentricSup;
    private DoubleSupplier translationRightTrigger;
 
-   private double robotSpeed = 2;
+   private double robotSpeed = 0.3;
 
    private double xMult = 1.0;
    private double yMult = 1.0;
